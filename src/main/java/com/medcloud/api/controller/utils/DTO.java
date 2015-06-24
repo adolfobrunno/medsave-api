@@ -1,8 +1,17 @@
 package com.medcloud.api.controller.utils;
 
 public class DTO {
-
+	
+	private boolean success;
 	private String error;
+
+	public boolean isSuccess() {
+		return success;
+	}
+
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
 
 	public String getError() {
 		return error;

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.medcloud.api.controller.dto.AuthenticationRequestDTO;
 import com.medcloud.api.controller.dto.AuthenticationResponseDTO;
-import com.medcloud.core.entities.User;
 import com.medcloud.core.exceptions.AuthenticationException;
 import com.medcloud.core.persistence.services.UserService;
 
@@ -29,17 +28,13 @@ public class AuthenticationController {
 		
 		AuthenticationResponseDTO dto = new AuthenticationResponseDTO();
 		
-		User u = new User();
-		u.setUsername(request.getUsername());
-		u.setPassword(request.getPassword());
-		u.setRole("ROLE_USER");
-		userService.save(u);
-//		
 		try {
 			dto.setToken(userService.authenticate(request.getUsername(), request.getPassword()));
+			dto.setSuccess(true);
 			response.setStatus(HttpStatus.OK.value());
 		} catch (AuthenticationException e) {
 			response.setStatus(HttpStatus.BAD_REQUEST.value());
+			dto.setSuccess(false);
 			dto.setError(e.getMessage());
 		}
 		
