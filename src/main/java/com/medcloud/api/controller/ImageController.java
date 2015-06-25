@@ -35,6 +35,7 @@ public class ImageController {
 		image.setCreation_date(request.getCreation_date());
 		image.setIid(request.getIid());
 		image.setType(ImageType.valueOf(request.getType()));
+		image.setSize(request.getSize());
 		
 		try {
 			imageService.save(image, request.getUser_token());
