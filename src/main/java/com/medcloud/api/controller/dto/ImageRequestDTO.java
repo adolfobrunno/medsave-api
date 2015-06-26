@@ -1,6 +1,5 @@
 package com.medcloud.api.controller.dto;
 
-import com.medcloud.core.enums.ImageType;
 
 public class ImageRequestDTO {
 
