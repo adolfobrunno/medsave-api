@@ -32,7 +32,14 @@
 	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
 		<constructor-arg name="mongoDbFactory" ref="mongoDbFactory" />
 	</bean>
-	
+   <mongo:mapping-converter id="converter" />
+ 
+	<bean name="gridFsTemplate"
+		class="org.springframework.data.mongodb.gridfs.GridFsTemplate">
+		<constructor-arg ref="mongoDbFactory" />
+		<constructor-arg ref="converter" />
+	</bean>
+    	
 	
 	<!-- Configuração para chamada de serviços REST -->
 	<bean id="httpComponentsClientHttpRequestFactory" class="org.springframework.http.client.HttpComponentsClientHttpRequestFactory"/>
@@ -55,9 +62,13 @@
         <property name="packagesToScan" value="com.medcloud"/>
     </bean>
     
-    <bean id="jacksonApiMessageConverter"
-		      class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter"/>
-    
+	<bean id="multipartResolver"
+    	class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+	
+	    <!-- one of the properties available; the maximum file size in bytes -->
+	    <property name="maxUploadSize" value="50000000"/>
+	</bean>
+ 
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<!-- Jasypt config -->

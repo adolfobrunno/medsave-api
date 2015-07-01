@@ -1,5 +1,7 @@
 package com.medcloud.api.controller.dto;
 
+import org.apache.http.entity.mime.content.FileBody;
+
 
 public class ImageRequestDTO {
 
@@ -10,6 +12,10 @@ public class ImageRequestDTO {
 	private String cid;
 	private String user_token;
 
+
+	ImageRequestDTO(){
+		
+	}
 	
 	public String getIid() {
 		return iid;

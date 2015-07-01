@@ -1,14 +1,18 @@
 package com.medcloud.api.controller;
 
+import java.io.IOException;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.medcloud.api.controller.dto.ImageRequestDTO;
 import com.medcloud.api.controller.dto.ImageResponseDTO;
@@ -26,25 +30,32 @@ public class ImageController {
 	
 	@ResponseBody
 	@RequestMapping(value="/new", method={RequestMethod.POST})
-	public ImageResponseDTO save(@RequestBody  ImageRequestDTO request, HttpServletResponse response){
+	public ImageResponseDTO save(
+			@RequestPart("properties") ImageRequestDTO properties, 
+			@RequestPart("file") MultipartFile file,
+			MultipartHttpServletRequest request, HttpServletResponse response){
 		
 		ImageResponseDTO dto = new ImageResponseDTO();
 		
 		Image image = new Image();
-		image.setCid(request.getCid());
-		image.setCreation_date(request.getCreation_date());
-		image.setIid(request.getIid());
-		image.setType(ImageType.valueOf(request.getType()));
-		image.setSize(request.getSize());
+		
+		image.setCid(properties.getCid());
+		image.setCreation_date(properties.getCreation_date());
+		image.setIid(properties.getIid());
+		image.setType(ImageType.valueOf(properties.getType()));
+		image.setSize(properties.getSize());
 		
 		try {
-			imageService.save(image, request.getUser_token());
+			imageService.save(image, file.getInputStream(), properties.getUser_token());
 			dto.setSuccess(true);
-			response.setStatus(HttpStatus.OK.value());
 		} catch (AuthenticationException e) {
 			dto.setSuccess(false);
 			dto.setError(e.getMessage());
 			response.setStatus(HttpStatus.UNAUTHORIZED.value());
+		} catch (IOException e) {
+			dto.setSuccess(false);
+			dto.setError(e.getMessage());
+			response.setStatus(HttpStatus.BAD_REQUEST.value());
 		}
 		
 		return dto;
