@@ -1,15 +1,19 @@
 package com.medcloud.api.controller.dto;
 
-import org.apache.http.entity.mime.content.FileBody;
+
 
 
 public class ImageRequestDTO {
 
 	private String iid;
-	private String type;
 	private String creation_date;
 	private String size;
 	private String cid;
+	private String sid;
+	private String sno;
+	private String pid;
+	private String modality;
+	private String path;
 	private String user_token;
 
 
@@ -22,12 +26,6 @@ public class ImageRequestDTO {
 	}
 	public void setIid(String iid) {
 		this.iid = iid;
-	}
-	public String getType() {
-		return type;
-	}
-	public void setType(String type) {
-		this.type = type;
 	}
 	public String getCreation_date() {
 		return creation_date;
@@ -52,6 +50,46 @@ public class ImageRequestDTO {
 	}
 	public void setUser_token(String user_token) {
 		this.user_token = user_token;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
+	public String getSid() {
+		return sid;
+	}
+
+	public void setSid(String sid) {
+		this.sid = sid;
+	}
+
+	public String getSno() {
+		return sno;
+	}
+
+	public void setSno(String sno) {
+		this.sno = sno;
+	}
+
+	public String getPid() {
+		return pid;
+	}
+
+	public void setPid(String pid) {
+		this.pid = pid;
+	}
+
+	public String getModality() {
+		return modality;
+	}
+
+	public void setModality(String modality) {
+		this.modality = modality;
 	}
 	
 }

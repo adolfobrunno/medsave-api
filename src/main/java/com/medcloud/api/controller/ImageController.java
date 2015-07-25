@@ -6,6 +6,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,7 +30,7 @@ public class ImageController {
 	private ImageService imageService;
 	
 	@ResponseBody
-	@RequestMapping(value="/new", method={RequestMethod.POST})
+	@RequestMapping(value="/new", method={RequestMethod.POST}, consumes={MediaType.MULTIPART_FORM_DATA_VALUE})
 	public ImageResponseDTO save(
 			@RequestPart("properties") ImageRequestDTO properties, 
 			@RequestPart("file") MultipartFile file,
@@ -42,7 +43,10 @@ public class ImageController {
 		image.setCid(properties.getCid());
 		image.setCreation_date(properties.getCreation_date());
 		image.setIid(properties.getIid());
-		image.setType(ImageType.valueOf(properties.getType()));
+		image.setModality(ImageType.valueOf(properties.getModality()));
+		image.setPid(properties.getPid());
+		image.setSid(properties.getSid());
+		image.setSno(properties.getSno());
 		image.setSize(properties.getSize());
 		
 		try {
