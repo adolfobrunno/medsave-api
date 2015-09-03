@@ -44,6 +44,7 @@ public class UserController {
 		userService.save(user);
 		
 		dto.setToken(user.getToken());
+		dto.setSuccess(true);
 		
 		return dto;
 		

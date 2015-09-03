@@ -41,7 +41,7 @@ public class ImageController {
 		Image image = new Image();
 		
 		image.setCid(properties.getCid());
-		image.setCreation_date(properties.getCreation_date());
+		image.setCreation_dateString(properties.getCreation_date());
 		image.setIid(properties.getIid());
 		image.setModality(ImageType.valueOf(properties.getModality()));
 		image.setPid(properties.getPid());
